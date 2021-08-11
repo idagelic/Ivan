@@ -14,46 +14,61 @@ struct _student{
 };
 
 
-int Insert(Position q);
+int InsertB(Position q);
+int InsertE(Position q);
 int PrintList(Position q);
+Position FindSur(Position q);
 int PrintMenu();
 
 int main()
-{
-
-	int case=-1;
+{   int i=-1;
 	Student Head;
 	Head.Next = NULL;
+	
 
-
- while (case != 0)
+ while (i!= 0)
     {
         PrintMenu();
-        scanf("%d", &case);
-        switch (case)
+        scanf("%d", &i);
+        switch (i)
         {
         case 1:
-            Insert(&Head);
+            InsertB(&Head);
             break;
         case 2:
            PrintList(Head.Next);
             break;
+        case 3:
+        	InsertE(&Head);
+        	break;
+        case 4:
+        	FindSur(&Head);
+        	break;
 	  default:
             printf("\nPogresan unos!");
-
+            
 		}
 }
 
-
 	return 0;
-
+	
 }
+
 int PrintMenu(){
-	printf("Odaberi izbor\n1. Insert\n2. Printlist\nExit. Izadji");
+	printf("\nOdaberi izbor\n1. InsertB\n2. Printlist\n3. InsertEnd\n4. Pronadi prezime\n Exit. Izadji\n\n");
 	return 0;
 }
 
-int Insert(Position q) {
+int InsertE(Position q) {
+
+	while (q->Next != NULL)
+	q = q->Next;
+	InsertB(q);
+		
+	return 0;
+}
+	
+int InsertB(Position q) {
 
 	Position p;
 	p = (Position)malloc(sizeof(Student));
@@ -61,23 +76,36 @@ int Insert(Position q) {
 		return -1;
 
 
-	printf("Unesite ime prezime i godinu rodjenja:\n");
+	printf("Unesite ime prezime i godinu rodjenja:\n\n");
 	scanf("%s %s %d", p->ime, p->prezime, &p->god_rod);
 
 	p->Next = q->Next;
 	q->Next = p;
-
-
+	
+	return 0;
 }
 
 int PrintList(Position q){
-
 	printf("Ispis liste:\n\n");
 
 	while (q != NULL) {
 		printf("%s %s %d\n", q->ime, q->prezime, q->god_rod);
 		q = q->Next;
 	}
+	return 0;
 
+}
 
+Position FindSur(Position q) {
+
+	char prez[32];
+	printf("Unesite prezime koje zelite pronaci: ");
+	scanf("%s/n", prez);
+
+	while (q != NULL && strcmp(q->prezime, prez) != 0)
+		q = q->Next;
+		
+	printf(" %s %s %d", q->ime, q->prezime, q->god_rod );
+
+	return q;
 }
