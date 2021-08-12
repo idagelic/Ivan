@@ -107,5 +107,4 @@ Position FindSur(Position q) {
 		
 	printf(" %s %s %d", q->ime, q->prezime, q->god_rod );
 
-	return q;
 }
