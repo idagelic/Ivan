@@ -18,13 +18,14 @@ int InsertB(Position q);
 int InsertE(Position q);
 int PrintList(Position q);
 Position FindSur(Position q);
+Position FindPrev(Position q, char* prez);
 int PrintMenu();
 
 int main()
 {   int i=-1;
 	Student Head;
 	Head.Next = NULL;
-	
+
 
  while (i!= 0)
     {
@@ -44,18 +45,21 @@ int main()
         case 4:
         	FindSur(&Head);
         	break;
+        case 5:
+          FindPrev(&Head, char* prez);
+          break;
 	  default:
             printf("\nPogresan unos!");
-            
+
 		}
 }
 
 	return 0;
-	
+
 }
 
 int PrintMenu(){
-	printf("\nOdaberi izbor\n1. InsertB\n2. Printlist\n3. InsertEnd\n4. Pronadi prezime\n Exit. Izadji\n\n");
+	printf("\nOdaberi izbor\n1. InsertB\n2. Printlist\n3. InsertEnd\n4. Pronadi prezime\n5. Pronadi prethodnog\n Exit. Izadji\n\n");
 	return 0;
 }
 
@@ -64,10 +68,10 @@ int InsertE(Position q) {
 	while (q->Next != NULL)
 	q = q->Next;
 	InsertB(q);
-		
+
 	return 0;
 }
-	
+
 int InsertB(Position q) {
 
 	Position p;
@@ -81,7 +85,7 @@ int InsertB(Position q) {
 
 	p->Next = q->Next;
 	q->Next = p;
-	
+
 	return 0;
 }
 
@@ -97,14 +101,27 @@ int PrintList(Position q){
 }
 
 Position FindSur(Position q) {
-
 	char prez[32];
+
 	printf("Unesite prezime koje zelite pronaci: ");
 	scanf("%s/n", prez);
 
-	while (q != NULL && strcmp(q->prezime, prez) != 0)
+	while (q != NULL && strcmp(q->prezime, prez) != 0){
 		q = q->Next;
-		
+  }
 	printf(" %s %s %d", q->ime, q->prezime, q->god_rod );
 
+}
+
+Position FindPrev(Position q, char* prez) {
+
+	Position Prev = q;
+	q = q->Next;
+
+	while(q != NULL && strcmp(q->prezime, prez) != 0){
+		Prev = q;
+		q = q->Next;
+	}
+
+	return Prev;
 }
